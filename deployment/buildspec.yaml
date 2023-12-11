@@ -7,13 +7,13 @@ phases:
 
   pre_build:
     commands:
-      - python -m pytest --junitxml=test_report/test_run
+      - python -m pytest
       - echo Build enviromment `uname -a` `aws --version 2>&1` `python --version`
       - echo Started build at `date`
       - pip install -r requirements.txt
       - mkdir /tmp/
       - rm buildspec.yml .gitignore
-      
+
   post_build:
     commands:
       - echo Finished build at `date`
