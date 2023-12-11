@@ -7,7 +7,7 @@ env:
     IMAGE_TAG: "api-latest"
   secrets-manager:
     DOCKER_PASSWORD: "arn:aws:secretsmanager:us-east-1:081975665870:secret:docker_password-EHEGAM"
-    TEST_SECRET: "arn:aws:secretsmanager:us-east-1:081975665870:secret:test-wreXXL"
+    TEST_SECRET: "test:test"
 
 phases:
   install:
