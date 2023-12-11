@@ -6,8 +6,7 @@ env:
     IMAGE_NAME: "simple-blog-kubernetes"
     IMAGE_TAG: "api-latest"
   secrets-manager:
-    DOCKER_PASSWORD: "arn:aws:secretsmanager:us-east-1:081975665870:secret:docker_password-EHEGAM"
-    TEST_SECRET: "test:test"
+    DOCKER_PASSWORD: "docker_password:docker_password"
 
 phases:
   install:
@@ -20,7 +19,6 @@ phases:
       - echo Started build at `date`
       - pip install -r requirements.txt
       - echo Logging in to Docker Hub...
-      - echo $TEST_SECRET
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
   build:
