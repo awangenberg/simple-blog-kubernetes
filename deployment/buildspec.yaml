@@ -7,10 +7,10 @@ phases:
 
   pre_build:
     commands:
-      - python -m pytest
       - echo Build enviromment `uname -a` `aws --version 2>&1` `python --version`
       - echo Started build at `date`
       - pip install -r requirements.txt
+      - python -m pytest
       - mkdir /tmp/
       - rm buildspec.yml .gitignore
 
