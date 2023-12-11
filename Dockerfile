@@ -2,7 +2,6 @@ FROM python:alpine
 
 WORKDIR /app
 
-
 # Copy only the requirements file and install dependencies
 COPY requirements.txt .
 RUN pip3 install --only-binary :all: -r requirements.txt

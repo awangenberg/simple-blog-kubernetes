@@ -6,7 +6,7 @@ env:
     IMAGE_NAME: "simple-blog-kubernetes"
     IMAGE_TAG: "api-latest"
   secrets-manager:
-    SECRET_VALUE: "arn:aws:secretsmanager:us-east-1:081975665870:secret:docker_password-EHEGAM"
+    DOCKER_PASSWORD: "arn:aws:secretsmanager:us-east-1:081975665870:secret:docker_password-EHEGAM"
 
 phases:
   install:
