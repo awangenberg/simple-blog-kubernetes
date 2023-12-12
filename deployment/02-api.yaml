@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-blog-api
+  namespace: simple-blog-kubernetes
+  labels:
+    app: simple-blog-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-blog-api
+  template:
+    metadata:
+      labels:
+        app: simple-blog-api
+    spec:
+      containers:
+        - name: simple-blog-api
+          image: adaol/simple-blog-kubernetes:tagname
+          ports:
+            - containerPort: 5000
+          env:
+            - name: RUNENVIRONMENT
+              value: Production
+      imagePullSecrets:
+      - name: my-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: simple-blog-kubernetes
+  name: simple-blog-api-service
+  annotations:
+    service.beta.kubernetes.io/linode-loadbalancer-throttle: "4"
+  labels:
+    app: simple-blog-api
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: simple-blog-api
+  sessionAffinity: None
