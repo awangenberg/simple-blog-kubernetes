@@ -7,6 +7,7 @@ env:
     IMAGE_TAG: "api-latest"
   secrets-manager:
     DOCKER_PASSWORD: "docker:password"
+    KUBERNETES_CONFIG: "kubernetes_config"
 
 phases:
   install:
@@ -31,5 +32,7 @@ phases:
 
   post_build:
     commands:
-      - echo Finished build at `date`
+      - echo pushing docker image...
       - docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+      - Restarting api with new image
+      - kubectl --kubeconfig=$KUBERNETES_CONFIG rollout restart deployment -n simple-blog-kubernetes simple-blog-api
