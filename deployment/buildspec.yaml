@@ -40,5 +40,5 @@ phases:
     commands:
       - echo pushing docker image...
       - docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
-      - Restarting api with new image
+      - echo Restarting api with new image
       - kubectl --kubeconfig=$KUBERNETES_CONFIG rollout restart deployment -n simple-blog-kubernetes simple-blog-api
