@@ -6,7 +6,7 @@ env:
     IMAGE_NAME: "simple-blog-kubernetes"
     IMAGE_TAG: "api-latest"
   secrets-manager:
-    DOCKER_PASSWORD: "docker_password:docker_password"
+    DOCKER_PASSWORD: "docker:password"
 
 phases:
   install:
