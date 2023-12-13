@@ -16,13 +16,8 @@ spec:
         app: simple-blog-api
     spec:
       containers:
-        livenessProbe:
-          httpGet:
-            path: /health-check
-            port: 5000
-            scheme: http
         - name: simple-blog-api
-          image: adaol/simple-blog-kubernetes:tagname
+          image: adaol/simple-blog-kubernetes:api-latest
           ports:
             - containerPort: 5000
           env:
