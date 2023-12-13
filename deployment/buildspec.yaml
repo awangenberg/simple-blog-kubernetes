@@ -40,4 +40,7 @@ phases:
       - echo pushing docker image...
       - docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
       - echo Restarting api with new image
-      - kubectl rollout restart deployment -n simple-blog-kubernetes simple-blog-api
+     # - kubectl rollout restart deployment -n simple-blog-kubernetes simple-blog-api
+
+  debug:
+    enable: true
