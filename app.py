@@ -3,17 +3,21 @@ from flask import Flask, jsonify, request
 
 app =   Flask(__name__)
 
-@app.route('/hello', methods=['GET']) 
-def helloworld(): 
-    if(request.method == 'GET'): 
-        data = {"data": "Hello World"} 
+@app.route('/posts', methods=['POST']) 
+def create_posts(): 
+    if(request.method == 'POST'): 
+        heading = request.form['heading']
+        body = request.form['body']
+        
         return jsonify(data) 
 
 @app.route('/health-check', methods=['GET']) 
 def health_check(): 
     if(request.method == 'GET'): 
-        data = {"health-check": "Service is up and running!"} 
+        data = {"health-check": "Service is up and running! 123"} 
         return jsonify(data)
+
+
 
 if __name__ == '__main__': 
     app.run(debug=True) 

@@ -36,7 +36,7 @@ metadata:
   labels:
     app: simple-blog-api
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: http
     port: 80
