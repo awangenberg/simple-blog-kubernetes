@@ -13,8 +13,10 @@ phases:
   install:
     commands:
     # Install kubectl
-      - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/kubectl
-      - chmod +x /bin/kubectl
+      - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.3/2023-11-14/bin/linux/arm64/kubectl
+      - chmod +x ./kubectl
+      - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+      - kubectl version --client
     runtime-versions:
       python: 3.8
 
