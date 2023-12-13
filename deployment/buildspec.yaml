@@ -42,5 +42,5 @@ phases:
       - echo Restarting api with new image
      # - kubectl rollout restart deployment -n simple-blog-kubernetes simple-blog-api
 
-  debug:
-    enable: true
+debug:
+  enable: true
