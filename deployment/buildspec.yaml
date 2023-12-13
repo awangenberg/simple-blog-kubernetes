@@ -14,21 +14,13 @@ phases:
     commands:
     # Install kubectl
       - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/kubectl
-      - chmod +x ./kubectl
-
-    # Move kubectl to a directory in PATH
-      - mkdir -p $HOME/bin
-      - mv ./kubectl $HOME/bin/kubectl
-
-    # Add $HOME/bin to PATH
-      - echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
-      - source $HOME/.bashrc
-      - kubectl version
+      - chmod +x /bin/kubectl
     runtime-versions:
       python: 3.8
 
   pre_build:
     commands:
+      - kubectl version
       - echo Build enviromment `uname -a` `aws --version 2>&1` `python --version`
       - echo Started build at `date`
       - pip install -r requirements.txt
