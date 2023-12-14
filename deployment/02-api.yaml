@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: simple-blog-api
-          image: adaol/simple-blog-kubernetes:api-1.0.0
+          image: adaol/simple-blog-kubernetes:api-latest
           ports:
             - containerPort: 5000
           env:
