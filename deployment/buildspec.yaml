@@ -4,7 +4,7 @@ env:
   variables:
     DOCKER_USERNAME: "adaol"
     IMAGE_NAME: "simple-blog-kubernetes"
-    IMAGE_TAG: "api-latest"
+    IMAGE_TAG: "api-v1.0.0"
   secrets-manager:
     DOCKER_PASSWORD: "docker:password"
     KUBERNETES_CONFIG: "kubernetes_config"
@@ -12,11 +12,10 @@ env:
 phases:
   install:
     commands:
-      - echo Install kubectl
-      - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.3/2023-11-14/bin/linux/arm64/kubectl
-      - chmod +x ./kubectl
-      - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
-      - kubectl version --client
+      - echo install dockerx..
+      - mkdir -vp ~/.docker/cli-plugins/
+      - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+      - chmod a+x ~/.docker/cli-plugins/docker-buildx
     runtime-versions:
       python: 3.8
 
@@ -32,7 +31,7 @@ phases:
     commands:
       - python -m pytest
       - echo Building the Docker image...          
-      - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+      - docker build --platform=linux/amd64 -t $IMAGE_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
 
   post_build:
