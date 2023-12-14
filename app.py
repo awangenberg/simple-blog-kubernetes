@@ -14,7 +14,7 @@ def create_posts():
 @app.route('/health-check', methods=['GET']) 
 def health_check(): 
     if(request.method == 'GET'): 
-        data = {"health-check": "Service is up and running! 123"} 
+        data = {"health-check": "Service is up and running!"} 
         return jsonify(data)
 
 
