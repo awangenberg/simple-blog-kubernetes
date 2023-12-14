@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM --platform=linux/arm64/v8 python:alpine
 
 WORKDIR /app
 
