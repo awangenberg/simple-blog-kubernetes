@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:alpine as build
+FROM python:alpine
 
 WORKDIR /app
 
