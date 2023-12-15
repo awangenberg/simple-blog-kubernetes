@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    DOCKER_USERNAME: "adaol"
+    IMAGE_NAME: "simple-blog-kubernetes-"
+    IMAGE_TAG: "latest"
+  secrets-manager:
+    DOCKER_PASSWORD: "docker:password"
+
+phases:
+ # install:
+ #   runtime-versions:
+ #     python: 3.12
+
+  pre_build:
+    commands:
+      - echo Logging in to Docker Hub...
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+  build:
+    commands:
+      - echo Building the Docker image...          
+      - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo pushing docker image...
+      - docker push $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
