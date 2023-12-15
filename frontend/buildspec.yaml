@@ -3,8 +3,8 @@ version: 0.2
 env:
   variables:
     DOCKER_USERNAME: "adaol"
-    IMAGE_NAME: "simple-blog-kubernetes-"
-    IMAGE_TAG: "latest"
+    IMAGE_NAME: "simple-blog-kubernetes"
+    IMAGE_TAG: "latest-frontend"
   secrets-manager:
     DOCKER_PASSWORD: "docker:password"
 
