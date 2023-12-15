@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "keeladmin.simple-blog.strangled.net"
+    - host: "keeladmin.simple-blog-api.strangled.net"
       http:
         paths:
           - pathType: Prefix
