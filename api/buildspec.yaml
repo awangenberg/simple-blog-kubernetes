@@ -15,6 +15,7 @@ phases:
 
   pre_build:
     commands:
+      - cd ./api
       - echo Build enviromment `uname -a` `aws --version 2>&1` `python --version`
       - echo Started build at `date`
       - echo Logging in to Docker Hub...
@@ -22,7 +23,8 @@ phases:
 
   build:
     commands:
-      - python -m pytest api/tests
+      - export PYTHONPATH=api
+      - python -m pytest
       - echo Building the Docker image...          
       - docker build -t $IMAGE_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
