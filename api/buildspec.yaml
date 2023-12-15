@@ -15,9 +15,8 @@ phases:
 
   pre_build:
     commands:
-      - export DOCKER_BUILDKIT=1 #enable buildkit for using buildx.
       - docker buildx ls
-
+      - cd ./api
       - echo Build enviromment `uname -a` `aws --version 2>&1` `python --version`
       - echo Started build at `date`
       - echo Logging in to Docker Hub...
