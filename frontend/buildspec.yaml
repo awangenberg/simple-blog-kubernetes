@@ -9,11 +9,12 @@ env:
     DOCKER_PASSWORD: "docker:password"
 
 phases:
-
+  install:
+    commands:
+      - export REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
   pre_build:
     commands:
       - cd ./frontend
-      - echo REACT_APP_ENV=${REACT_APP_API_BASE_URL} >> .env
       - echo Logging in to Docker Hub...
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
