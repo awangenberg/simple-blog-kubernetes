@@ -9,19 +9,17 @@ env:
     DOCKER_PASSWORD: "docker:password"
 
 phases:
- # install:
- #   runtime-versions:
- #     python: 3.12
 
   pre_build:
     commands:
       - cd ./frontend
+      - echo REACT_APP_ENV=${REACT_APP_API_BASE_URL} >> .env
       - echo Logging in to Docker Hub...
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
   build:
     commands:
-      - echo Building the Docker image...         
+      - echo Building the Docker image...
       - docker build -t $IMAGE_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG
 

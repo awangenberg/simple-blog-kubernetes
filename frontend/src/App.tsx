@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
   const [text, setText] = useState(null);
   
-  getHealthCheck().then(result => {
-    console.log(result);
-    setText(result);
-  }).catch(error => {
-    console.error(error);
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+        const result = await getHealthCheck();
+        console.log(result);
+        setText(result);
+    };
+
+    fetchData();
+  }, []);
   
   
   return (
@@ -33,16 +36,21 @@ function App() {
   );
 }
 
+
 const getHealthCheck = async () => {
+
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
     try {
-      const response =  await fetch('http://127.0.0.1:5000/health-check');
+      console.log("url: " + baseUrl);
+      const response =  await fetch(baseUrl + '/health-check');
 
       if(response.ok){
         return await response.json();
       }
 
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
   
 };
