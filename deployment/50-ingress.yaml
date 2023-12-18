@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: "simple-blog.strangled.net"
+    - host: "simple-blog-api.strangled.net"
       http:
         paths:
           - pathType: Prefix
@@ -15,5 +15,15 @@ spec:
             backend:
               service:
                 name: simple-blog-api-service
+                port:
+                  number: 80
+    - host: "simple-blog.strangled.net"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: spelet-service
                 port:
                   number: 80

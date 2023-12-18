@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-blog
+  namespace: simple-blog-kubernetes
+  labels:
+    app: frontend-blog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-blog
+  template:
+    metadata:
+      labels:
+        app: frontend-blog
+    spec:
+      containers:
+        - name: frontend-blog
+          image: adaol/simple-blog-kubernetes:frontend-latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: RUNENVIRONMENT
+              value: Production
+            - name: REACT_APP_API_BASE_URL
+              value: https://simple-blog-api.strangled.net.com
+      imagePullSecrets:
+      - name: my-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: simple-blog-kubernetes
+  name: frontend-blog-service
+  labels:
+    app: frontend-blog
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: frontend-blog
+  sessionAffinity: None

@@ -4,14 +4,11 @@ env:
   variables:
     DOCKER_USERNAME: "adaol"
     IMAGE_NAME: "simple-blog-kubernetes"
-    IMAGE_TAG: "latest-frontend"
+    IMAGE_TAG: "frontend-latest"
   secrets-manager:
     DOCKER_PASSWORD: "docker:password"
 
 phases:
-  install:
-    commands:
-      - export REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
   pre_build:
     commands:
       - cd ./frontend
