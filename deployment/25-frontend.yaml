@@ -24,7 +24,7 @@ spec:
             - name: RUNENVIRONMENT
               value: Production
             - name: REACT_APP_API_BASE_URL
-              value: https://simple-blog-api.strangled.net.com
+              value: https://simple-blog-api.strangled.net
       imagePullSecrets:
       - name: my-registry-secret
 ---

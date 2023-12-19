@@ -24,6 +24,6 @@ spec:
             path: "/"
             backend:
               service:
-                name: spelet-service
+                name: frontend-blog-service
                 port:
                   number: 80
