@@ -10,7 +10,7 @@ CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "HEAD", "POST", 
 @app.route('/health-check', methods=['GET']) 
 def health_check(): 
     if(request.method == 'GET'): 
-        response = flask.jsonify({'health-check': 'The service is up and running!!'})
+        response = flask.jsonify({'health-check': 'The service is up and running! 123'})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
