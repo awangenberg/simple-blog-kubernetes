@@ -1,1 +1,49 @@
-## TODO:fix later
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: simple-blog-kubernetes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 30
+      hostname: mysql01
+      containers:
+      - name: mysql
+        image: mysql
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-uri
+              key: password
+        volumeMounts:
+        - name: mysqldb
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysqldb
+        persistentVolumeClaim:
+          claimName: pvc-mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: simple-blog-kubernetes
+spec:
+  selector:
+    app: mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: NodePort
