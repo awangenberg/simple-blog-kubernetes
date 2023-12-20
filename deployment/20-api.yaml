@@ -23,6 +23,11 @@ spec:
           env:
             - name: RUNENVIRONMENT
               value: Production
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: password
       imagePullSecrets:
       - name: my-registry-secret
 ---

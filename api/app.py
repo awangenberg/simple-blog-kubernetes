@@ -9,10 +9,10 @@ from data.database import Post, db, insert_post, remove_post, retrieve_all_posts
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-if os.getenv('RUNENVIRONMENT') == "Production":
-    app.config.from_object(ProductionConfig())
+if os.getenv('RUNENVIRONMENT').lower() == "production":
+    app.config.from_object(ProductionConfig)
 else:
-    app.config.from_object(DevelopmentConfig())
+    app.config.from_object(DevelopmentConfig)
 
 
 CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "HEAD", "POST", "OPTIONS"], "allow_headers": ["*"]}})
@@ -76,7 +76,7 @@ def get_post(id):
 @app.route("/posts",  methods=['GET'])
 def get_all_posts():
     posts:Post = []
-    for post in retrieve_all_posts:
+    for post in retrieve_all_posts():
         json = create_post_json(post)
         posts.append(json)
  

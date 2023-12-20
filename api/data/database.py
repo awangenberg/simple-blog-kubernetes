@@ -25,7 +25,7 @@ def retrieve_post(id):
     
 def retrieve_all_posts():
     info('User with Id: %s retrieving all posts', userid)
-    Post.query.all()
+    return Post.query.all()
       
 def insert_post(new_post: Post):
     new_post.userid = userid
