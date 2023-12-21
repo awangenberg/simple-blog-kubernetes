@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: frontend-blog
-          image: adaol/simple-blog-kubernetes:frontend-version1.0.0
+          image: adaol/simple-blog-kubernetes:frontend-version1.1.0
           ports:
             - containerPort: 3000
           env:
             - name: RUNENVIRONMENT
               value: Production
             - name: REACT_APP_API_BASE_URL
-              value: https://simple-blog-api.strangled.net
+              value: http://simple-blog-api.strangled.net
       imagePullSecrets:
       - name: my-registry-secret
 ---

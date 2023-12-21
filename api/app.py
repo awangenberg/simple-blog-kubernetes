@@ -54,13 +54,15 @@ def add_posts():
     return response
 
 @app.route("/posts/<id>", methods=['DELETE'])
+@cross_origin()
 def delete_post(id):
     remove_post(id)
     response = make_response('')
     response.status_code = 204
     return response
 
-@app.route('/posts/<id>', methods=['GET']) 
+@app.route('/posts/<id>', methods=['GET'])
+@cross_origin()
 def get_post(id): 
     post:Post = retrieve_post(id)
     
@@ -72,6 +74,7 @@ def get_post(id):
     return response
     
 @app.route("/posts",  methods=['GET'])
+@cross_origin()
 def get_all_posts():
     posts:Post = []
     for post in retrieve_all_posts():

@@ -1,10 +1,10 @@
-import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import { PostModel } from '../api/apiModels';
+
 
 const styles = {
   cardAction: {
@@ -14,32 +14,41 @@ const styles = {
 }
 
 interface PostCardProps {
-  heading: string;
-  body: string;
-  date: string;
-  picture?: string | undefined;
+  post: PostModel
 };
 
 const PostCard = ({
-  heading,
-  body,
-  date,
-  picture,
+  post
 }: PostCardProps) => {
 
-  const truncatedBody = body?.length > 650 ? body.substring(0, 650) + '...' : body;
-  const formattedDate = date.replace('GMT', '')
+  const truncatedBody = post.body?.length > 650 ? post.body.substring(0, 650) + '...' : post.body;
+  const parts = post.created.split(":"); // we want to remove seconds and timezone from date
+  const trimmedDateString = parts[0] + ":" + parts[1];
   
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const postData = {
+      id: post.id,
+      heading: post.heading,
+      body: post.body,
+      createdOn: trimmedDateString,
+      picture: post.picture
+    }
+      
+    navigate(`/posts/${post.id}`, { state: postData });
+  };
+
   return (
     <>
     <Card sx={{ minWidth: 275 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
       <CardContent>
         <Typography variant="h5" component="div">
-          {heading}
+          {post.heading}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {formattedDate}
+          {trimmedDateString}
         </Typography>
         <Typography variant="body2">
           {truncatedBody}
