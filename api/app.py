@@ -2,11 +2,14 @@ import logging
 import os
 from flask import Flask, jsonify, make_response, request
 import flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from config import DevelopmentConfig, ProductionConfig 
 from data.database import Post, db, insert_post, remove_post, retrieve_all_posts, retrieve_post
 
 app = Flask(__name__)
+cors = CORS(app, origins=['http://localhost:3001'])
+#CORS(app, support_credentials=True)
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 if os.getenv('RUNENVIRONMENT').lower() == "production":
@@ -15,21 +18,20 @@ else:
     app.config.from_object(DevelopmentConfig)
 
 
-CORS(app, resources={r"/*": {"origins": "*", "methods": ["GET", "HEAD", "POST", "OPTIONS"], "allow_headers": ["*"]}})
 
 db.app = app 
 db.init_app(app)
 
 
-@app.route('/health-check', methods=['GET']) 
+@app.route('/health-check', methods=['GET'])
+@cross_origin()
 def health_check(): 
     if(request.method == 'GET'):
-        insert_post()
         response = flask.jsonify({'health-check': 'The service is up and running!'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.route('/posts', methods=['POST'])
+@cross_origin()
 def add_posts():
     data = request.get_json()
     new_post = Post()
@@ -50,7 +52,6 @@ def add_posts():
     
     response = jsonify({ "id": id })
     response.status_code = 200
-    response.headers.add('Access-Control-Allow-Origin', '*') #TODO set this globally to frontend URL
     return response
 
 @app.route("/posts/<id>", methods=['DELETE'])
@@ -58,7 +59,6 @@ def delete_post(id):
     remove_post(id)
     response = make_response('')
     response.status_code = 204
-    response.headers.add('Access-Control-Allow-Origin', '*') #TODO set this globally to frontend URL
     return response
 
 @app.route('/posts/<id>', methods=['GET']) 
@@ -70,7 +70,6 @@ def get_post(id):
         response.status_code = 404
     else:
         response = jsonify(create_post_json(post))
-        response.headers.add('Access-Control-Allow-Origin', '*') #TODO set this globally to frontend URL
     return response
     
 @app.route("/posts",  methods=['GET'])
@@ -81,7 +80,6 @@ def get_all_posts():
         posts.append(json)
  
     response = jsonify(posts)
-    response.headers.add('Access-Control-Allow-Origin', '*') #TODO set this globally to frontend URL
     return response
 
 def create_post_json(post: Post):

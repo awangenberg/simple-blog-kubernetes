@@ -1,0 +1,15 @@
+# .gitignore
+
+# Node.js
+node_modules/
+
+# User-specific files
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Build files
+build/
+dist/

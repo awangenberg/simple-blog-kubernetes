@@ -17,7 +17,16 @@ class Post(db.Model):
 
 def remove_post(id):
     Post.query.filter(id == id).delete
-    info('User with Id: %s deleted post with Id: %s ', userid, id)
+    
+    post_to_delete = Post.query.get(id)
+    if post_to_delete:
+        db.session.delete(post_to_delete)
+        db.session.commit()
+        info('User with Id: %s deleted post with Id: %s ', userid, id)
+    else:
+        info('User with Id: %s tried to delete post with Id: %s but was not found.', userid, id)
+
+    
 
 def retrieve_post(id):
     info('User with Id: %s retrieving post with Id: %s ', userid, id)

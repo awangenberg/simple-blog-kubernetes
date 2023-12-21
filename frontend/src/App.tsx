@@ -3,17 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [text, setText] = useState(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-        const result = await getHealthCheck();
-        console.log(result);
-        setText(result);
-    };
 
-    fetchData();
-  }, []);
   
   
   return (
@@ -21,7 +11,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-           {JSON.stringify(text)}
+           {'HEJSAN'}
         </p>
         <a
           className="App-link"
@@ -29,30 +19,12 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React 123
+          Learn React 123!!
         </a>
       </header>
     </div>
   );
 }
 
-
-const getHealthCheck = async () => {
-
-  const baseUrl = process.env.REACT_APP_API_BASE_URL;
-
-    try {
-      console.log("url: " + baseUrl);
-      const response =  await fetch(baseUrl + '/health-check');
-
-      if(response.ok){
-        return await response.json();
-      }
-
-    } catch (error) {
-        console.error(error);
-    }
-  
-};
-
 export default App;
+
