@@ -7,8 +7,7 @@ from config import DevelopmentConfig, ProductionConfig
 from data.database import Post, db, insert_post, remove_post, retrieve_all_posts, retrieve_post
 
 app = Flask(__name__)
-cors = CORS(app, origins=['http://localhost:3001'])
-#CORS(app, support_credentials=True)
+cors = CORS(app, origins=['http://localhost:3000', 'http://simple-blog.strangled.net/'])
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
