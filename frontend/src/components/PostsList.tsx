@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import PostCard from './PostCard';
-import { useEffect } from 'react';
-import { getAllPosts, getHealthCheck } from '../api/api';
 import { PostModel } from '../api/apiModels';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -16,24 +14,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function PostList() {
+interface PostListProps {
+  posts: PostModel[]
+};
 
-  const [posts, setPosts] = React.useState<PostModel[]>([]);
+const PostsList = ({
+  posts
+}: PostListProps) => {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getAllPosts()
-
-      result.sort(function(a,b){
-        return new Date(b.created).valueOf() - new Date(a.created).valueOf();
-      });
-
-      console.log(result);
-      setPosts(result);
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -49,3 +37,4 @@ export default function PostList() {
     </Box>
   );
 }
+export default PostsList;

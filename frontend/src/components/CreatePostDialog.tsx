@@ -6,9 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { createNewPost } from '../api/api';
 import { CreatePostModel } from '../api/apiModels';
+import UpdateDataContext from '../updateDataContext';
 
 
 
@@ -18,6 +19,10 @@ interface CreatePostDialogProps {
 }
 
 const CreatePostDialog = ({ setOpen, setToggleSnackbar }: CreatePostDialogProps) => {
+
+    const level = useContext(UpdateDataContext);
+
+    const { shouldFetchPosts, setShouldFetchPosts } = useContext(UpdateDataContext);
 
     const createPost = async () => {
         const newPost: CreatePostModel = {
@@ -29,6 +34,7 @@ const CreatePostDialog = ({ setOpen, setToggleSnackbar }: CreatePostDialogProps)
         createNewPost(newPost)
 
         setToggleSnackbar(true)
+        setShouldFetchPosts(true)
         setOpen(false)
     };
 

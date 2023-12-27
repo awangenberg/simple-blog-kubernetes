@@ -7,24 +7,16 @@ import { Alert, Snackbar } from "@mui/material";
 import Button from "@mui/material/Button";
 import CreateIcon from '@mui/icons-material/Create';
 import CreatePostDialog from "./CreatePostDialog";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
+import UpdateDataContext from "../updateDataContext";
 
 export default function Header() {
 
     const [isOpen, setOpen] = React.useState(false);
     const [toggleSnackbar, setToggleSnackbar] = React.useState(false);
     const location = useLocation();
-    useEffect(() => {
-        console.log(toggleSnackbar)
-        if (toggleSnackbar) {
-            const fetchNewData = () => {
-                //TODO: set all posts here...    
-            };
-            fetchNewData();
-        }
-    }, [toggleSnackbar]);
 
     const renderButtonBasedOnPage = () => {
         const pageIdPattern = /^\/posts\/\d+$/;

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Divider, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { getAllPosts, deletePost } from '../api/api';
+import UpdateDataContext from '../updateDataContext';
 
 
 const PostDetails = () => {
@@ -13,6 +14,9 @@ const PostDetails = () => {
   const { state } = location;
 
   const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const { shouldFetchPosts, setShouldFetchPosts } = useContext(UpdateDataContext);
+
 
   const handleDeleteClick = () => {
     setDialogOpen(true);
@@ -25,6 +29,7 @@ const PostDetails = () => {
   const handleConfirmDelete = async () => {
     await deletePost(id);
     navigate('/')
+    setShouldFetchPosts(true)
     setDialogOpen(false);
   };
 
