@@ -13,7 +13,7 @@ phases:
     runtime-versions:
       python: 3.12
     commands: 
-      - pip3 install -r requirements.txt
+      - pip3 install -r api/requirements.txt
 
   pre_build:
     commands:
