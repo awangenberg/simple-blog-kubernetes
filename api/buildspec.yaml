@@ -23,8 +23,7 @@ phases:
 
   build:
     commands:
-      - export PYTHONPATH=api
-     # - python -m pytest FIX LATER
+      - RUNENVIRONMENT='testing' py.test
       - echo Building the Docker image...          
       - docker build -t $IMAGE_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG

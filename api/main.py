@@ -1,30 +1,41 @@
 import logging
 import os
 from flask import Flask, jsonify, make_response, request
-import flask
 from flask_cors import CORS, cross_origin
-from config import DevelopmentConfig, ProductionConfig 
-from data.database import Post, db, insert_post, remove_post, retrieve_all_posts, retrieve_post
+from config import DevelopmentConfig, ProductionConfig, TestConfiguration 
+from data.database import Post, db
+import flask
+from data.database import *
 
 app = Flask(__name__)
-cors = CORS(app, origins=['http://localhost:3000', 'http://simple-blog.strangled.net/'])
+CORS(app, origins=['http://localhost:3000', 'http://simple-blog.strangled.net/'])
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+def create_app():
+    print("hejsan")
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-if os.getenv('RUNENVIRONMENT').lower() == "production":
-    app.config.from_object(ProductionConfig)
-else:
-    app.config.from_object(DevelopmentConfig)
+    run_environment = os.getenv('RUNENVIRONMENT', '').lower()
 
+    if run_environment == "production":
+        app.config.from_object(ProductionConfig)
+    elif run_environment == "development":
+        app.config.from_object(DevelopmentConfig)
+    elif run_environment == "testing":
+        app.config.from_object(TestConfiguration)
+    else:
+        raise KeyError("RUNENVIRONMENT has to be set as an os-environment variable")
 
+    db.app = app
+    db.init_app(app)
 
-db.app = app 
-db.init_app(app)
+    return app
 
+app = create_app()
 
 @app.route('/health-check', methods=['GET'])
 @cross_origin()
-def health_check(): 
+def health_check():
+    print("Registered Routes:", app.url_map)
     if(request.method == 'GET'):
         response = flask.jsonify({'health-check': 'The service is up and running!'})
         return response
@@ -91,6 +102,8 @@ def create_post_json(post: Post):
                  "created":post.created_at,
                  "picture":post.picture}
 
-with app.app_context():
-    db.create_all()
-    app.run()
+
+if __name__ == '__main__':    
+    with app.app_context():
+        db.create_all()
+        app.run()

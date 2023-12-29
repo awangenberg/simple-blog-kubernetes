@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { ChangeEvent, useContext, useState } from 'react';
 import { createNewPost } from '../api/api';
@@ -19,8 +18,6 @@ interface CreatePostDialogProps {
 }
 
 const CreatePostDialog = ({ setOpen, setToggleSnackbar }: CreatePostDialogProps) => {
-
-    const level = useContext(UpdateDataContext);
 
     const { shouldFetchPosts, setShouldFetchPosts } = useContext(UpdateDataContext);
 
