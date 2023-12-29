@@ -11,7 +11,6 @@ app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000', 'http://simple-blog.strangled.net/'])
 
 def create_app():
-    print("hejsan")
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     run_environment = os.getenv('RUNENVIRONMENT', '').lower()
